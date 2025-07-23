@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Tuğla Kırma Neon Power-Up</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#00ffff" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      padding: 10px;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      border: 2px solid #00ffff;
+      background-color: #111;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tuğla Kırma Neon Power-Up</h1>
+    <p>
+      Skor: <span id="score">0</span> |
+      Seviye: <span id="level">1</span> |
+      En Yüksek Skor: <span id="highScore">0</span>
+    </p>
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Responsive canvas boyutu ayarla
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      const width = window.innerWidth;
+      const height = window.innerHeight * 0.6; // ekranın %60'ı kadar yükseklik
+
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Dokunmatik ve mouse kontrolü
+    let inputX = 0;
+
+    canvas.addEventListener("mousemove", (e) => {
+      inputX = e.offsetX;
+      // paddleMove(inputX); // örnek fonksiyon çağırılabilir
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      inputX = touch.clientX - rect.left;
+      // paddleMove(inputX); // örnek fonksiyon çağırılabilir
+    }, { passive: false });
+
+    // Örnek paddle kontrol (script.js içinde kullanılacaksa bu inputX’i oraya aktarabilirsin)
+    setInterval(() => {
+      // paddleMove(inputX); // paddle konumunu inputX’e göre güncelle
+    }, 16); // her 60fps'de bir
+  </script>
+</body>
+</html>
